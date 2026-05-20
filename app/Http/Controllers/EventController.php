@@ -10,12 +10,12 @@ class EventController extends Controller
     public function index()
     {
         $events = Event::all();
-        return view('event.index', compact('events'));
+        return view('Event.index', compact('events'));  // ← изменено
     }
 
     public function create()
     {
-        return view('event.create');
+        return view('Event.create');  // ← изменено
     }
 
     public function store(Request $request)
@@ -36,7 +36,7 @@ class EventController extends Controller
 
     public function edit(Event $event)
     {
-        return view('event.edit', compact('event'));
+        return view('Event.edit', compact('event'));  // ← изменено
     }
 
     public function update(Request $request, Event $event)
