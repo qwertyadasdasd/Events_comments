@@ -52,7 +52,7 @@
 
         <div class="btn-group">
             <a href="{{ route('comments.index') }}" class="btn-comment">Комментарии</a>
-            <a href="{{ route('categories.index') }}" class="btn-category">Категории</a>
+            <a href="{{ route('events.index') }}" class="btn-category">События</a>
         </div>
 
         <form action="{{ route('logout') }}" method="POST">

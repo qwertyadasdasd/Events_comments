@@ -12,7 +12,7 @@ class Event extends Model
     protected $fillable = ['name', 'address', 'description', 'guests', 'start_date', 'end_date'];
 
     // Добавьте эту связь
-    public function comments()
+    public function event()
     {
         return $this->hasMany(Comment::class);
     }

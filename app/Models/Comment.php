@@ -12,8 +12,8 @@ class Comment extends Model
     protected $fillable = ['title', 'content', 'author', 'category', 'email', 'rating', 'event_id'];
 
     // Добавьте эту связь
-    public function event()
+    public function comment()
     {
-        return $this->belongsTo(Event::class);
+        return $this->belongsTo(Comment::class);
     }
 }
