@@ -4,40 +4,33 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Laravel</title>
-
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Nunito', sans-serif;
-            background-color: #f7fafc;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
         }
-
         .container {
             max-width: 72rem;
             margin: 0 auto;
             padding: 2rem 1.5rem;
         }
-
         .header {
             display: flex;
             justify-content: center;
             padding-top: 2rem;
         }
-
         .logo {
-            height: 4rem;
-            width: auto;
+            font-size: 46px;
+            font-weight: bold;
+            color: white;
         }
-
         .card {
             background-color: white;
             border-radius: 0.5rem;
@@ -45,128 +38,113 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             margin-top: 2rem;
         }
-
         .card-grid {
             display: grid;
             grid-template-columns: 1fr;
         }
-
         .card-item {
             padding: 1.5rem;
             border-bottom: 1px solid #e2e8f0;
         }
-
         .card-content {
             display: flex;
             align-items: center;
         }
-
         .card-icon {
             width: 2rem;
             height: 2rem;
-            color: #a0aec0;
+            color: #667eea;
         }
-
         .card-title {
             margin-left: 1rem;
             font-size: 1.125rem;
             font-weight: 600;
         }
-
         .card-title a {
             color: #1a202c;
+            text-decoration: none;
+        }
+        .card-title a:hover {
             text-decoration: underline;
         }
-
         .card-text {
             margin-top: 0.5rem;
             margin-left: 3rem;
             color: #718096;
             font-size: 0.875rem;
         }
-
         .footer {
             display: flex;
             justify-content: space-between;
             margin-top: 1rem;
             font-size: 0.875rem;
-            color: #a0aec0;
+            color: #cbd5e0;
         }
-
         .footer-links {
             display: flex;
             align-items: center;
             gap: 1rem;
         }
-
         .footer-links a {
-            color: #a0aec0;
+            color: #cbd5e0;
+            text-decoration: none;
+        }
+        .footer-links a:hover {
             text-decoration: underline;
         }
 
-        .login-links {
-            position: fixed;
-            top: 0;
-            right: 0;
-            padding: 1rem 1.5rem;
+        /* ИЗМЕНЕНО: кнопки по центру */
+        .auth-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            margin-bottom: 30px;
         }
-
-        .login-links a {
-            font-size: 0.875rem;
-            color: #4a5568;
-            text-decoration: underline;
-            margin-left: 1rem;
+        .auth-btn {
+            padding: 12px 30px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            background: #f0f0f0;
         }
 
         @media (min-width: 768px) {
             .card-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-
-            .card-item {
-                border-bottom: none;
-            }
-
             .card-item:first-child {
                 border-right: 1px solid #e2e8f0;
-            }
-        }
-
-        @media (min-width: 640px) {
-            .header {
-                justify-content: flex-start;
-                padding-top: 0;
-            }
-
-            .logo {
-                height: 5rem;
-            }
-
-            .container {
-                padding: 0 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-@if (Route::has('login'))
-    <div class="login-links">
-        @auth
-            <a href="{{ url('/home') }}">Home</a>
-        @else
-            <a href="{{ route('login') }}">Log in</a>
-            @if (Route::has('register'))
-                <a href="{{ route('register') }}">Register</a>
-            @endif
-        @endauth
-    </div>
-@endif
-
 <div class="container">
     <div class="header">
-        <!-- Ваш SVG логотип здесь -->
         <div class="logo">Laravel</div>
     </div>
+
+    <!-- КНОПКИ В ЦЕНТРЕ -->
+    @if (Route::has('login'))
+        <div class="auth-buttons">
+            @auth
+                <a href="{{ url('/dashboard') }}" class="auth-btn">Dashboard</a>
+            @else
+                <a href="{{ route('login') }}" class="auth-btn">Войти</a>
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}" class="auth-btn">Регистрация</a>
+                @endif
+            @endauth
+        </div>
+    @endif
 
     <div class="card">
         <div class="card-grid">
