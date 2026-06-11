@@ -9,16 +9,7 @@ class RoleRequest extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'user_id',
-        'current_role',
-        'requested_role',
-        'reason',
-        'status',
-        'processed_by',
-        'admin_comment',
-        'processed_at'
-    ];
+    protected $fillable = ['user_id', 'current_role', 'requested_role', 'reason', 'status', 'processed_by', 'admin_comment', 'processed_at'];
 
     protected $casts = [
         'processed_at' => 'datetime',

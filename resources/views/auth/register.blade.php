@@ -10,17 +10,52 @@
 
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             min-height: 100vh;
+            position: relative;
         }
 
-        .card-body {
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .register-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .register-card {
             max-width: 480px;
-            margin: 50px auto;
-            background: #fff;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 48px 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             animation: slideUp 0.5s ease;
         }
 
@@ -35,84 +70,119 @@
             }
         }
 
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .form-title {
+        .register-header {
             text-align: center;
-            color: #333;
-            font-size: 28px;
-            margin-bottom: 5px;
+            margin-bottom: 36px;
         }
 
-        .form-subtitle {
-            text-align: center;
-            color: #888;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-
-        .mb-3 {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .mb-3 label {
-            color: #555;
-            font-weight: 500;
+        .register-title {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             margin-bottom: 8px;
+        }
+
+        .register-subtitle {
+            color: #6b7280;
             font-size: 14px;
+            font-weight: 500;
         }
 
-        .mb-3 input {
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            color: #374151;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
             padding: 12px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
             font-size: 15px;
-            transition: all 0.3s;
+            color: #1f2937;
+            transition: all 0.2s ease;
+            background: #f9fafb;
+        }
+
+        .form-input:focus {
             outline: none;
-        }
-
-        .mb-3 input:focus {
             border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
         }
 
-        .mb-3 input.error {
-            border-color: #e74c3c;
+        .form-input.error {
+            border-color: #ef4444;
+            background: #fef2f2;
         }
 
         .error-message {
-            color: #e74c3c;
+            color: #ef4444;
             font-size: 12px;
-            margin-top: 5px;
+            font-weight: 500;
+            margin-top: 6px;
+            display: block;
         }
 
-        .btn-register {
+        .password-strength {
+            margin-top: 8px;
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease, background 0.3s ease;
+        }
+
+        .strength-text {
+            font-size: 11px;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        .register-button {
+            width: 100%;
             padding: 14px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
+            color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 10px;
+            transition: all 0.2s ease;
+            margin-top: 8px;
         }
 
-        .btn-register:hover {
+        .register-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 10px 20px -5px rgba(102, 126, 234, 0.4);
+        }
+
+        .register-button:active {
+            transform: translateY(0);
         }
 
         .login-link {
             text-align: center;
-            margin-top: 20px;
-            color: #666;
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            color: #6b7280;
             font-size: 14px;
         }
 
@@ -125,120 +195,116 @@
 
         .login-link a:hover {
             color: #764ba2;
-            text-decoration: underline;
-        }
-
-        .password-strength {
-            margin-top: 8px;
-            height: 4px;
-            background: #e0e0e0;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .password-strength-bar {
-            height: 100%;
-            width: 0%;
-            transition: width 0.3s, background 0.3s;
-        }
-
-        .strength-text {
-            font-size: 11px;
-            margin-top: 5px;
-            color: #888;
         }
 
         .alert {
-            padding: 12px 16px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
             font-size: 14px;
+            font-weight: 500;
         }
 
         .alert-danger {
-            background: #fee2e2;
-            color: #e74c3c;
-            border-left: 4px solid #e74c3c;
+            background: #fef2f2;
+            color: #dc2626;
+            border-left: 4px solid #dc2626;
+        }
+
+        .alert-danger ul {
+            margin-top: 8px;
+            margin-left: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .register-card {
+                padding: 32px 24px;
+            }
+            .register-title {
+                font-size: 28px;
+            }
         }
     </style>
 
-    <div class="card-body">
-        <h2 class="form-title">📝 Регистрация</h2>
-        <p class="form-subtitle">Создайте новый аккаунт</p>
-
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <strong>Пожалуйста, исправьте следующие ошибки:</strong>
-                <ul style="margin-top: 10px; margin-left: 20px;">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <form method="POST" action="{{ route('register.post') }}" id="registerForm">
-            @csrf
-
-            <div class="mb-3">
-                <label>👤 Имя</label>
-                <input type="text"
-                       name="name"
-                       placeholder="Введите ваше имя"
-                       value="{{ old('name') }}"
-                       class="@error('name') error @enderror"
-                       required
-                       minlength="2"
-                       maxlength="255">
-                @error('name')
-                <span class="error-message">{{ $message }}</span>
-                @enderror
+    <div class="register-container">
+        <div class="register-card">
+            <div class="register-header">
+                <h1 class="register-title">Создать аккаунт</h1>
+                <p class="register-subtitle">Зарегистрируйтесь, чтобы начать работу</p>
             </div>
 
-            <div class="mb-3">
-                <label>📧 Email</label>
-                <input type="email"
-                       name="email"
-                       placeholder="Введите ваш email"
-                       value="{{ old('email') }}"
-                       class="@error('email') error @enderror"
-                       required>
-                @error('email')
-                <span class="error-message">{{ $message }}</span>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label>🔒 Пароль</label>
-                <input type="password"
-                       name="password"
-                       id="password"
-                       placeholder="Придумайте пароль"
-                       class="@error('password') error @enderror"
-                       required
-                       minlength="6">
-                <div class="password-strength">
-                    <div class="password-strength-bar" id="strengthBar"></div>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <strong>Пожалуйста, исправьте следующие ошибки:</strong>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
-                <div class="strength-text" id="strengthText"></div>
-                @error('password')
-                <span class="error-message">{{ $message }}</span>
-                @enderror
+            @endif
+
+            <form method="POST" action="{{ route('register.post') }}" id="registerForm">
+                @csrf
+
+                <div class="form-group">
+                    <label class="form-label">Имя пользователя</label>
+                    <input type="text"
+                           name="name"
+                           class="form-input @error('name') error @enderror"
+                           placeholder="Введите ваше имя"
+                           value="{{ old('name') }}"
+                           required>
+                    @error('name')
+                    <span class="error-message">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Электронная почта</label>
+                    <input type="email"
+                           name="email"
+                           class="form-input @error('email') error @enderror"
+                           placeholder="example@mail.ru"
+                           value="{{ old('email') }}"
+                           required>
+                    @error('email')
+                    <span class="error-message">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Пароль</label>
+                    <input type="password"
+                           name="password"
+                           id="password"
+                           class="form-input @error('password') error @enderror"
+                           placeholder="Придумайте пароль"
+                           required>
+                    <div class="password-strength">
+                        <div class="password-strength-bar" id="strengthBar"></div>
+                    </div>
+                    <div class="strength-text" id="strengthText"></div>
+                    @error('password')
+                    <span class="error-message">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Подтверждение пароля</label>
+                    <input type="password"
+                           name="password_confirmation"
+                           class="form-input"
+                           placeholder="Повторите пароль"
+                           required>
+                </div>
+
+                <button type="submit" class="register-button">Зарегистрироваться</button>
+            </form>
+
+            <div class="login-link">
+                Уже есть аккаунт? <a href="{{ route('login') }}">Войти</a>
             </div>
-
-            <div class="mb-3">
-                <label>✅ Подтверждение пароля</label>
-                <input type="password"
-                       name="password_confirmation"
-                       placeholder="Повторите пароль"
-                       required>
-            </div>
-
-            <button type="submit" class="btn-register">Зарегистрироваться</button>
-        </form>
-
-        <div class="login-link">
-            Уже есть аккаунт? <a href="{{ route('login') }}">Войти</a>
         </div>
     </div>
 
@@ -251,35 +317,50 @@
             passwordInput.addEventListener('input', function() {
                 const password = this.value;
                 let strength = 0;
+                let percentage = 0;
+                let message = '';
+                let color = '';
+
+                if (password.length === 0) {
+                    strengthBar.style.width = '0%';
+                    strengthText.textContent = '';
+                    return;
+                }
 
                 if (password.length >= 6) strength++;
                 if (password.length >= 10) strength++;
-                if (/[A-Z]/.test(password)) strength++;
+                if (/[A-ZА-Я]/.test(password)) strength++;
                 if (/[0-9]/.test(password)) strength++;
-                if (/[^A-Za-z0-9]/.test(password)) strength++;
+                if (/[^A-Za-zА-Яа-я0-9]/.test(password)) strength++;
 
-                const percentage = (strength / 5) * 100;
-                strengthBar.style.width = percentage + '%';
+                percentage = (strength / 5) * 100;
 
                 if (percentage < 20) {
-                    strengthBar.style.background = '#e74c3c';
-                    strengthText.textContent = 'Слабый пароль';
-                    strengthText.style.color = '#e74c3c';
+                    message = 'Слабый пароль';
+                    color = '#ef4444';
                 } else if (percentage < 60) {
-                    strengthBar.style.background = '#f39c12';
-                    strengthText.textContent = 'Средний пароль';
-                    strengthText.style.color = '#f39c12';
+                    message = 'Средний пароль';
+                    color = '#f59e0b';
                 } else {
-                    strengthBar.style.background = '#27ae60';
-                    strengthText.textContent = 'Сильный пароль';
-                    strengthText.style.color = '#27ae60';
+                    message = 'Сильный пароль';
+                    color = '#10b981';
                 }
 
-                if (!password) {
-                    strengthBar.style.width = '0%';
-                    strengthText.textContent = '';
-                }
+                strengthBar.style.width = percentage + '%';
+                strengthBar.style.background = color;
+                strengthText.textContent = message;
+                strengthText.style.color = color;
             });
         }
+
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('input', function() {
+                this.classList.remove('error');
+                const errorMsg = this.parentNode.querySelector('.error-message');
+                if (errorMsg && !this.name.includes('password')) {
+                    errorMsg.remove();
+                }
+            });
+        });
     </script>
 @endsection

@@ -2,44 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreRoleRequest;
-use App\Services\RoleRequestService;
+use App\Models\RoleRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
-use App\Models\RoleRequest;
 
 class RoleRequestController extends Controller
 {
-    protected RoleRequestService $service;
-
-    public function __construct(RoleRequestService $service)
+    public function __construct()
     {
-        $this->middleware('auth'); // Добавьте эту строку
-        $this->service = $service;
+        $this->middleware('auth');
     }
 
     public function create()
     {
-        $user = Auth::user(); // Исправлено
+        $user = Auth::user();
 
-        // Проверяем, есть ли активный запрос
         $hasPendingRequest = RoleRequest::where('user_id', $user->id)
             ->where('status', 'pending')
             ->exists();
 
-        // Проверяем, существует ли метод getAvailableRoles
-        if (method_exists(RoleRequest::class, 'getAvailableRoles')) {
-            $availableRoles = RoleRequest::getAvailableRoles($user->role);
-        } else {
-            // Заглушка или логика по умолчанию
-            $availableRoles = ['admin', 'moderator', 'editor'];
-        }
+        $availableRoles = ['Админ', 'Модератор', 'Редактор'];
 
-        return view('role-requests.create', compact('availableRoles', 'hasPendingRequest', 'user'));
+        return view('role-request.create', compact('availableRoles', 'hasPendingRequest', 'user'));
     }
 
-    public function show() // Исправлено: show вместо Show
+    public function show()
     {
         $user = Auth::user();
         $requests = RoleRequest::where('user_id', $user->id)->get();
@@ -58,13 +46,7 @@ class RoleRequestController extends Controller
             return back()->with('error', 'У вас уже есть активный запрос на повышение роли.');
         }
 
-        // Проверяем существование метода
-        if (method_exists(RoleRequest::class, 'getAvailableRoles')) {
-            $availableRoles = RoleRequest::getAvailableRoles($user->role);
-            $availableRoles = is_array($availableRoles) ? $availableRoles : $availableRoles->toArray();
-        } else {
-            $availableRoles = ['admin', 'moderator', 'editor'];
-        }
+        $availableRoles = ['Админ', 'Модератор', 'Редактор'];
 
         $request->validate([
             'requested_role' => [
@@ -80,9 +62,11 @@ class RoleRequestController extends Controller
             'reason.max' => 'Причина не должна превышать 500 символов.',
         ]);
 
+        $currentRole = $user->role ?? 'user';
+
         RoleRequest::create([
             'user_id' => $user->id,
-            'current_role' => $user->role,
+            'current_role' => $currentRole,
             'requested_role' => $request->requested_role,
             'reason' => $request->reason,
             'status' => 'pending'
@@ -99,6 +83,6 @@ class RoleRequestController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('role-requests.my-requests', compact('requests'));
+        return view('role-request.my-requests', compact('requests'));
     }
 }

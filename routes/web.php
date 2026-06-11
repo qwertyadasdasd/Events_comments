@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\RoleRequestController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,7 +25,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::resource('events', EventController::class);
-
     Route::resource('comments', CommentController::class);
 
     Route::prefix('role-request')->name('role-request.')->group(function () {
@@ -32,4 +32,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/', [RoleRequestController::class, 'store'])->name('store');
         Route::get('/my-requests', [RoleRequestController::class, 'myRequests'])->name('my-requests');
     });
+});
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/role-requests', [App\Http\Controllers\AdminController::class, 'roleRequests'])->name('role-requests');
+    Route::patch('/role-requests/{id}/approve', [App\Http\Controllers\AdminController::class, 'approveRequest'])->name('role-requests.approve');
+    Route::patch('/role-requests/{id}/reject', [App\Http\Controllers\AdminController::class, 'rejectRequest'])->name('role-requests.reject');
 });

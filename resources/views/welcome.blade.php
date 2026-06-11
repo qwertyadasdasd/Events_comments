@@ -3,191 +3,312 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Laravel Events</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: 'Nunito', sans-serif;
+            font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
         }
+
+        /* Анимированные фоновые элементы */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.05)" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
         .container {
-            max-width: 72rem;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 2rem 1.5rem;
+            padding: 2rem 2rem;
+            position: relative;
+            z-index: 1;
         }
-        .header {
-            display: flex;
-            justify-content: center;
-            padding-top: 2rem;
-        }
-        .logo {
-            font-size: 46px;
-            font-weight: bold;
-            color: white;
-        }
-        .card {
-            background-color: white;
-            border-radius: 0.5rem;
-            overflow: hidden;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            margin-top: 2rem;
-        }
-        .card-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-        }
-        .card-item {
-            padding: 1.5rem;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        .card-content {
-            display: flex;
-            align-items: center;
-        }
-        .card-icon {
-            width: 2rem;
-            height: 2rem;
-            color: #667eea;
-        }
-        .card-title {
-            margin-left: 1rem;
-            font-size: 1.125rem;
-            font-weight: 600;
-        }
-        .card-title a {
-            color: #1a202c;
-            text-decoration: none;
-        }
-        .card-title a:hover {
-            text-decoration: underline;
-        }
-        .card-text {
-            margin-top: 0.5rem;
-            margin-left: 3rem;
-            color: #718096;
-            font-size: 0.875rem;
-        }
-        .footer {
+
+        /* Новая шапка */
+        .navbar {
             display: flex;
             justify-content: space-between;
-            margin-top: 1rem;
-            font-size: 0.875rem;
-            color: #cbd5e0;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
-        .footer-links {
+
+        .logo-section {
             display: flex;
             align-items: center;
-            gap: 1rem;
-        }
-        .footer-links a {
-            color: #cbd5e0;
-            text-decoration: none;
-        }
-        .footer-links a:hover {
-            text-decoration: underline;
+            gap: 12px;
         }
 
-        /* ИЗМЕНЕНО: кнопки по центру */
-        .auth-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
-            margin-bottom: 30px;
+        .logo-icon {
+            font-size: 32px;
+            color: white;
         }
-        .auth-btn {
-            padding: 12px 30px;
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 14px;
+        }
+
+        .btn-login {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-login:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-register {
             background: white;
             color: #667eea;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        .auth-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            background: #f0f0f0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
-        @media (min-width: 768px) {
-            .card-grid {
-                grid-template-columns: repeat(2, 1fr);
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-dashboard {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #333;
+        }
+
+        /* Hero секция */
+        .hero {
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .hero-title {
+            font-size: 56px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease 0.1s both;
+        }
+
+        /* Карточки */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .feature-text {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        /* Статистика */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 4rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 5px;
+        }
+
+        /* Анимации */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
             }
-            .card-item:first-child {
-                border-right: 1px solid #e2e8f0;
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 20px;
+                padding: 1.5rem;
+            }
+
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <div class="header">
-        <div class="logo">Laravel</div>
-    </div>
-
-    <!-- КНОПКИ В ЦЕНТРЕ -->
-    @if (Route::has('login'))
-        <div class="auth-buttons">
-            @auth
-                <a href="{{ url('/dashboard') }}" class="auth-btn">Dashboard</a>
-            @else
-                <a href="{{ route('login') }}" class="auth-btn">Войти</a>
-                @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="auth-btn">Регистрация</a>
-                @endif
-            @endauth
-        </div>
-    @endif
-
-    <div class="card">
-        <div class="card-grid">
-            <div class="card-item">
-                <div class="card-content">
-                    <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                    </svg>
-                    <div class="card-title">
-                        <a href="https://laravel.com/docs">Documentation</a>
-                    </div>
-                </div>
-                <div class="card-text">
-                    Laravel has wonderful, thorough documentation covering every aspect of the framework.
-                </div>
-            </div>
-
-            <div class="card-item">
-                <div class="card-content">
-                    <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
-                        <path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    </svg>
-                    <div class="card-title">
-                        <a href="https://laracasts.com">Laracasts</a>
-                    </div>
-                </div>
-                <div class="card-text">
-                    Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development.
-                </div>
+    <nav class="navbar">
+        <div class="logo-section">
+            <i class="fas fa-calendar-alt logo-icon"></i>
+            <div class="logo-text">
+                Event<span>Hub</span>
             </div>
         </div>
+
+        @if (Route::has('login'))
+            <div class="nav-buttons">
+                @auth
+                    <a href="{{ url('/dashboard') }}" class="btn btn-dashboard">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                @else
+                    <a href="{{ route('login') }}" class="btn btn-login">
+                        <i class="fas fa-sign-in-alt"></i> Войти
+                    </a>
+                    @if (Route::has('register'))
+                        <a href="{{ route('register') }}" class="btn btn-register">
+                            <i class="fas fa-user-plus"></i> Регистрация
+                        </a>
+                    @endif
+                @endauth
+            </div>
+        @endif
+    </nav>
+
+    <div class="hero">
+        <h1 class="hero-title">
+            Управляйте событиями<br>с легкостью
+        </h1>
+        <p class="hero-subtitle">
+            Современная платформа для создания и управления мероприятиями
+        </p>
     </div>
 
-    <div class="footer">
-        <div class="footer-links">
-            <a href="https://laravel.bigcartel.com">Shop</a>
-            <a href="https://github.com/sponsors/taylorotwell">Sponsor</a>
+    <div class="features">
+        <div class="feature-card">
+            <i class="fas fa-plus-circle feature-icon"></i>
+            <h3 class="feature-title">Создавайте события</h3>
+            <p class="feature-text">Легко добавляйте новые мероприятия с подробным описанием, датой и местом проведения</p>
         </div>
-        <div>
-            Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
+
+        <div class="feature-card">
+            <i class="fas fa-users feature-icon"></i>
+            <h3 class="feature-title">Приглашайте гостей</h3>
+            <p class="feature-text">Управляйте списком гостей и отслеживайте подтверждения участия</p>
+        </div>
+
+        <div class="feature-card">
+            <i class="fas fa-chart-line feature-icon"></i>
+            <h3 class="feature-title">Анализируйте</h3>
+            <p class="feature-text">Получайте статистику посещаемости и отзывы о мероприятиях</p>
         </div>
     </div>
+
+
 </div>
 </body>
 </html>

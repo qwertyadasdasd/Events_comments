@@ -10,24 +10,59 @@
 
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             min-height: 100vh;
+            position: relative;
         }
 
-        .card-body {
-            max-width: 420px;
-            margin: 60px auto;
-            background: #fff;
-            padding: 40px 35px;
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-            animation: fadeIn 0.5s ease;
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
         }
 
-        @keyframes fadeIn {
+        body::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-card {
+            max-width: 440px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 48px 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(-20px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -35,157 +70,184 @@
             }
         }
 
-        .form-title {
+        .login-header {
             text-align: center;
-            color: #333;
-            font-size: 28px;
-            margin-bottom: 10px;
+            margin-bottom: 36px;
         }
 
-        .form-subtitle {
-            text-align: center;
-            color: #888;
-            font-size: 14px;
-            margin-bottom: 30px;
-        }
-
-        .mb-3 {
-            margin-bottom: 20px;
-        }
-
-        .mb-3 label {
-            display: block;
-            color: #555;
-            font-size: 14px;
-            font-weight: 500;
+        .login-title {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             margin-bottom: 8px;
         }
 
-        .mb-3 input {
+        .login-subtitle {
+            color: #6b7280;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            color: #374151;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
             width: 100%;
             padding: 12px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
             font-size: 15px;
-            transition: all 0.3s;
-            box-sizing: border-box;
+            color: #1f2937;
+            transition: all 0.2s ease;
+            background: #f9fafb;
         }
 
-        .mb-3 input:focus {
-            border-color: #667eea;
+        .form-input:focus {
             outline: none;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #667eea;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
         }
 
-        .mb-3 input.error {
-            border-color: #e74c3c;
+        .form-input.error {
+            border-color: #ef4444;
+            background: #fef2f2;
         }
 
         .error-message {
-            color: #e74c3c;
+            color: #ef4444;
             font-size: 12px;
-            margin-top: 5px;
+            font-weight: 500;
+            margin-top: 6px;
             display: block;
         }
 
-        .btn-login {
+        .login-button {
             width: 100%;
             padding: 14px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
+            color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s ease;
+            margin-top: 8px;
         }
 
-        .btn-login:hover {
+        .login-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 10px 20px -5px rgba(102, 126, 234, 0.4);
         }
 
-        .btn-login:active {
+        .login-button:active {
             transform: translateY(0);
         }
 
         .register-link {
             text-align: center;
-            margin-top: 25px;
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            color: #6b7280;
             font-size: 14px;
-            color: #555;
         }
 
         .register-link a {
             color: #667eea;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 600;
             transition: color 0.2s;
         }
 
         .register-link a:hover {
             color: #764ba2;
-            text-decoration: underline;
         }
 
         .alert {
-            padding: 12px 16px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
             font-size: 14px;
+            font-weight: 500;
         }
 
         .alert-danger {
-            background: #fee2e2;
-            color: #e74c3c;
-            border-left: 4px solid #e74c3c;
+            background: #fef2f2;
+            color: #dc2626;
+            border-left: 4px solid #dc2626;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 32px 24px;
+            }
+            .login-title {
+                font-size: 28px;
+            }
         }
     </style>
 
-    <div class="card-body">
-        <h2 class="form-title">🔐 Вход в систему</h2>
-        <p class="form-subtitle">Добро пожаловать обратно!</p>
-
-        @if(session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
-
-        <form method="POST" action="{{ route('login.post') }}" id="loginForm">
-            @csrf
-
-            <div class="mb-3">
-                <label>📧 Email</label>
-                <input type="email"
-                       name="email"
-                       placeholder="Введите email"
-                       value="{{ old('email') }}"
-                       class="@error('email') error @enderror"
-                       required>
-                @error('email')
-                <span class="error-message">{{ $message }}</span>
-                @enderror
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1 class="login-title">Добро пожаловать</h1>
+                <p class="login-subtitle">Войдите в свой аккаунт</p>
             </div>
 
-            <div class="mb-3">
-                <label>🔒 Пароль</label>
-                <input type="password"
-                       name="password"
-                       placeholder="Введите пароль"
-                       class="@error('password') error @enderror"
-                       required>
-                @error('password')
-                <span class="error-message">{{ $message }}</span>
-                @enderror
+            @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            <form method="POST" action="{{ route('login.post') }}" id="loginForm">
+                @csrf
+
+                <div class="form-group">
+                    <label class="form-label">Электронная почта</label>
+                    <input type="email"
+                           name="email"
+                           class="form-input @error('email') error @enderror"
+                           placeholder="example@mail.ru"
+                           value="{{ old('email') }}"
+                           required>
+                    @error('email')
+                    <span class="error-message">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Пароль</label>
+                    <input type="password"
+                           name="password"
+                           class="form-input @error('password') error @enderror"
+                           placeholder="Введите пароль"
+                           required>
+                    @error('password')
+                    <span class="error-message">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <button type="submit" class="login-button">Войти</button>
+            </form>
+
+            <div class="register-link">
+                Нет аккаунта? <a href="{{ route('register') }}">Зарегистрироваться</a>
             </div>
-
-            <button type="submit" class="btn-login">Войти</button>
-        </form>
-
-        <div class="register-link">
-            Нет аккаунта? <a href="{{ route('register') }}">Зарегистрироваться</a>
         </div>
     </div>
 
@@ -196,13 +258,31 @@
 
             if (!email.value.trim()) {
                 e.preventDefault();
-                alert('Введите email');
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message';
+                errorDiv.textContent = 'Введите адрес электронной почты';
+                email.parentNode.appendChild(errorDiv);
+                email.classList.add('error');
+                setTimeout(() => errorDiv.remove(), 3000);
                 email.focus();
             } else if (!password.value) {
                 e.preventDefault();
-                alert('Введите пароль');
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message';
+                errorDiv.textContent = 'Введите пароль';
+                password.parentNode.appendChild(errorDiv);
+                password.classList.add('error');
+                setTimeout(() => errorDiv.remove(), 3000);
                 password.focus();
             }
+        });
+
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('input', function() {
+                this.classList.remove('error');
+                const errorMsg = this.parentNode.querySelector('.error-message');
+                if (errorMsg) errorMsg.remove();
+            });
         });
     </script>
 @endsection

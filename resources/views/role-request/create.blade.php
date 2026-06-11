@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Добавить комментарий')
+@section('title', 'Запрос на роль')
 
 @section('content')
     <style>
@@ -48,7 +48,17 @@
             margin-left: 4px;
         }
 
-        .form-control {
+        .current-role {
+            display: inline-block;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .form-control, .form-select {
             width: 100%;
             padding: 12px 16px;
             border: 2px solid #e5e7eb;
@@ -59,7 +69,7 @@
             background: #f9fafb;
         }
 
-        .form-control:focus {
+        .form-control:focus, .form-select:focus {
             outline: none;
             border-color: #667eea;
             background: #ffffff;
@@ -69,26 +79,6 @@
         textarea.form-control {
             resize: vertical;
             min-height: 120px;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .checkbox-group input {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            margin: 0;
-        }
-
-        .checkbox-group label {
-            margin: 0;
-            cursor: pointer;
-            font-weight: 500;
-            color: #374151;
         }
 
         .form-actions {
@@ -131,17 +121,31 @@
             transform: translateY(-1px);
         }
 
-        .alert-danger {
-            background: #fef2f2;
-            border-left: 4px solid #ef4444;
+        .alert-success {
+            background: #d1fae5;
+            color: #059669;
+            border-left: 4px solid #10b981;
             border-radius: 12px;
-            padding: 16px 20px;
+            padding: 14px 20px;
             margin-bottom: 24px;
         }
 
-        .alert-danger ul {
-            margin-top: 8px;
-            margin-left: 20px;
+        .alert-danger {
+            background: #fef2f2;
+            color: #dc2626;
+            border-left: 4px solid #ef4444;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin-bottom: 24px;
+        }
+
+        .alert-warning {
+            background: #fed7aa;
+            color: #c2410c;
+            border-left: 4px solid #f59e0b;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin-bottom: 24px;
         }
 
         .error-message {
@@ -155,11 +159,9 @@
             .form-card-body {
                 padding: 24px;
             }
-
             .form-actions {
                 flex-direction: column;
             }
-
             .btn-primary, .btn-secondary {
                 text-align: center;
             }
@@ -167,106 +169,79 @@
     </style>
 
     <div class="form-header">
-        <h1 class="form-title">Добавить комментарий</h1>
-        <p class="form-subtitle">Оставьте отзыв или комментарий</p>
+        <h1 class="form-title">Запрос на повышение роли</h1>
+        <p class="form-subtitle">Повышение уровня доступа для расширения возможностей</p>
     </div>
 
-    @if ($errors->any())
-        <div class="alert-danger">
-            <strong>Исправьте следующие ошибки:</strong>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+    @if(session('success'))
+        <div class="alert-success">{{ session('success') }}</div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert-danger">{{ session('error') }}</div>
+    @endif
+
+    @if($hasPendingRequest ?? false)
+        <div class="alert-warning">
+            <strong>Внимание!</strong> У вас уже есть активный запрос на повышение роли. Дождитесь его обработки.
         </div>
     @endif
 
     <div class="form-card">
         <div class="form-card-body">
-            <form action="{{ route('comments.store') }}" method="POST">
+            <form action="{{ route('role-request.store') }}" method="POST">
                 @csrf
 
-                <input type="hidden" name="event_id" value="1">
+                <div class="form-group">
+                    <label class="form-label">Текущая роль</label>
+                    <div>
+                        <span class="current-role">{{ ucfirst(Auth::user()->role ?? 'Пользователь') }}</span>
+                    </div>
+                </div>
 
                 <div class="form-group">
                     <label class="form-label">
-                        Имя
+                        Желаемая роль
                         <span class="required">*</span>
                     </label>
-                    <input type="text"
-                           name="name"
-                           class="form-control @error('name') is-invalid @enderror"
-                           value="{{ old('name') }}"
-                           required
-                           placeholder="Введите ваше имя">
-                    @error('name')
+                    <select name="requested_role" class="form-select" required>
+                        <option value="">Выберите роль</option>
+                        @foreach($availableRoles ?? ['admin', 'moderator', 'editor'] as $role)
+                            <option value="{{ $role }}" {{ old('requested_role') == $role ? 'selected' : '' }}>
+                                {{ ucfirst($role) }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('requested_role')
                     <span class="error-message">{{ $message }}</span>
                     @enderror
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">
-                        Email
+                        Причина повышения
                         <span class="required">*</span>
                     </label>
-                    <input type="email"
-                           name="email"
-                           class="form-control @error('email') is-invalid @enderror"
-                           value="{{ old('email') }}"
-                           required
-                           placeholder="example@mail.ru">
-                    @error('email')
-                    <span class="error-message">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">
-                        Комментарий
-                        <span class="required">*</span>
-                    </label>
-                    <textarea name="comment"
-                              class="form-control @error('comment') is-invalid @enderror"
+                    <textarea name="reason"
+                              class="form-control"
                               rows="5"
                               required
-                              placeholder="Ваш комментарий...">{{ old('comment') }}</textarea>
-                    @error('comment')
+                              placeholder="Опишите, почему вы хотите получить эту роль...">{{ old('reason') }}</textarea>
+                    @error('reason')
                     <span class="error-message">{{ $message }}</span>
                     @enderror
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">ID поста</label>
-                    <input type="number"
-                           name="post_id"
-                           class="form-control @error('post_id') is-invalid @enderror"
-                           value="{{ old('post_id') }}"
-                           placeholder="Привязка к посту (необязательно)">
-                    @error('post_id')
-                    <span class="error-message">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="form-group checkbox-group">
-                    <input type="checkbox"
-                           name="approved"
-                           value="1"
-                           id="approved"
-                        {{ old('approved') ? 'checked' : '' }}>
-                    <label for="approved">Одобрен</label>
                 </div>
 
                 <div class="form-actions">
-                    <a href="{{ route('comments.index') }}" class="btn-secondary">Назад</a>
-                    <button type="submit" class="btn-primary">Сохранить комментарий</button>
+                    <a href="{{ route('dashboard') }}" class="btn-secondary">Назад</a>
+                    <button type="submit" class="btn-primary">Отправить запрос</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
-        document.querySelectorAll('.form-control').forEach(input => {
+        document.querySelectorAll('.form-control, .form-select').forEach(input => {
             input.addEventListener('input', function() {
                 this.classList.remove('is-invalid');
                 const errorMsg = this.parentNode.querySelector('.error-message');

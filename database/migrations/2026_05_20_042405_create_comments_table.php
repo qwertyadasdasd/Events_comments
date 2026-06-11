@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('email');
             $table->integer('rating');
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
+            $table->boolean('approved')->default(false);
             $table->timestamps();
         });
     }

@@ -9,11 +9,11 @@ class Comment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'content', 'author', 'category', 'email', 'rating', 'event_id'];
+    protected $fillable = ['title', 'content', 'author', 'category', 'email', 'rating', 'event_id'  ];
 
     // Добавьте эту связь
-    public function comment()
+    public function event()
     {
-        return $this->belongsTo(Comment::class);
+        return $this->belongsTo(Event::class);
     }
 }

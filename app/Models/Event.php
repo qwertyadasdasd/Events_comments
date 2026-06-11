@@ -9,10 +9,10 @@ class Event extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'address', 'description', 'guests', 'start_date', 'end_date'];
+    protected $fillable = ['name', 'slug', 'description', 'address', 'location', 'start_date', 'guests', 'color', 'sort_order'];
 
     // Добавьте эту связь
-    public function event()
+    public function Comments()
     {
         return $this->hasMany(Comment::class);
     }
