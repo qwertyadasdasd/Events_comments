@@ -39,3 +39,4 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::patch('/role-requests/{id}/approve', [App\Http\Controllers\AdminController::class, 'approveRequest'])->name('role-requests.approve');
     Route::patch('/role-requests/{id}/reject', [App\Http\Controllers\AdminController::class, 'rejectRequest'])->name('role-requests.reject');
 });
+

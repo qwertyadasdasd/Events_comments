@@ -106,9 +106,9 @@
                         <td>
                             <strong>{{ $req->user->name }}</strong>
                             <br>
-                            <small style="color: #9ca3af;">{{ $req->user->email }}</small>
+                            <small>{{ $req->user->email }}</small>
                         </td>
-                        <td>{{ $req->current_role ?? 'user' }}</td>
+                        <td>{{ $req->current_role ?? 'Пользователь' }}</td>
                         <td>{{ $req->requested_role }}</td>
                         <td>{{ $req->reason }}</td>
                         <td>
@@ -137,7 +137,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" style="text-align: center; padding: 40px;">Нет запросов</td>
+                        <td colspan="6" style="text-align: center;">Нет запросов</td>
                     </tr>
                 @endforelse
                 </tbody>

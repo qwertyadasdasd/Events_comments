@@ -187,7 +187,7 @@
                 <a href="{{ route('comments.index') }}" class="nav-link">Комментарии</a>
 
                 @if(Auth::user()->role === 'admin')
-                    <a href="{{ route('admin.dashboard') }}" class="nav-link">Админ-панель</a>
+                    <a href="{{ route('admin.role-requests') }}" class="nav-link">👑 Админ-панель</a>
                 @endif
 
                 <form action="{{ route('logout') }}" method="POST" style="display: inline; margin: 0;">
