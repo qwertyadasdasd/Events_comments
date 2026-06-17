@@ -183,6 +183,16 @@
             border-top: 1px solid #f3f4f6;
         }
 
+        .type-public {
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        .type-private {
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
         @media (max-width: 768px) {
             .comments-header {
                 flex-direction: column;
@@ -228,6 +238,7 @@
                 <th>Комментарий</th>
                 <th>Пост ID</th>
                 <th>Статус</th>
+                <th>Тип</th>
                 <th>Действия</th>
             </tr>
             </thead>
@@ -254,6 +265,13 @@
                         @endif
                     </td>
                     <td>
+                        @if($comment->is_public)
+                            <span class="type-public">Публичный</span>
+                        @else
+                            <span class="type-private">Личный</span>
+                        @endif
+                    </td>
+                    <td>
                         <div class="action-buttons">
                             <a href="{{ route('comments.edit', $comment) }}" class="btn-edit">Редактировать</a>
                             <form action="{{ route('comments.destroy', $comment) }}" method="POST" style="display: inline;">
@@ -268,7 +286,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6" class="empty-state">
+                    <td colspan="7" class="empty-state">  <!-- было 6, стало 7 -->
                         <p>Нет созданных комментариев</p>
                         <a href="{{ route('comments.create') }}">Добавить первый комментарий →</a>
                     </td>

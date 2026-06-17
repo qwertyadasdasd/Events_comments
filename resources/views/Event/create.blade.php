@@ -167,6 +167,11 @@
                                 <i class="fas fa-save"></i> Сохранить событие
                             </button>
                         </div>
+
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" name="is_public" value="1" id="is_public" {{ old('is_public', true) ? 'checked' : '' }}>
+                            <label for="is_public">Публичное событие (видят все пользователи)</label>
+                        </div>
                     </form>
                 </div>
             </div>

@@ -209,6 +209,11 @@
                     <a href="{{ route('comments.index') }}" class="btn-secondary">Назад</a>
                     <button type="submit" class="btn-primary">Обновить</button>
                 </div>
+
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" name="is_public" value="1" id="is_public" {{ old('is_public', $comment->is_public ?? true) ? 'checked' : '' }}>
+                    <label for="is_public">Публичный комментарий</label>
+                </div>
             </form>
         </div>
     </div>

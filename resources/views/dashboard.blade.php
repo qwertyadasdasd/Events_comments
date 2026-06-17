@@ -15,7 +15,6 @@
             position: relative;
         }
 
-        /* Декоративные элементы фона */
         body::before {
             content: '';
             position: absolute;
@@ -48,7 +47,6 @@
             z-index: 1;
         }
 
-        /* Приветственная секция */
         .welcome-section {
             margin-bottom: 32px;
         }
@@ -65,7 +63,6 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
-        /* Карточка профиля */
         .profile-card {
             background: #ffffff;
             border-radius: 28px;
@@ -130,7 +127,6 @@
             letter-spacing: 0.3px;
         }
 
-        /* Статистика */
         .stats {
             display: flex;
             gap: 48px;
@@ -158,7 +154,47 @@
             letter-spacing: 0.5px;
         }
 
-        /* Сетка виджетов */
+        /* Admin stats */
+        .admin-stats {
+            margin-top: 20px;
+            padding: 24px 32px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-stats-title {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 16px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .admin-stats-grid {
+            display: flex;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .admin-stat-item {
+            text-align: center;
+        }
+
+        .admin-stat-number {
+            font-size: 32px;
+            font-weight: 800;
+            color: #e94560;
+        }
+
+        .admin-stat-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
         .widgets-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -239,7 +275,6 @@
             font-size: 14px;
         }
 
-        /* Кнопки */
         .btn-action {
             display: inline-flex;
             align-items: center;
@@ -278,7 +313,6 @@
             transform: translateY(-2px);
         }
 
-        /* Активность */
         .recent-activity {
             background: #ffffff;
             border-radius: 24px;
@@ -347,7 +381,6 @@
             font-weight: 600;
         }
 
-        /* Алерты */
         .alert {
             padding: 16px 24px;
             border-radius: 16px;
@@ -363,59 +396,52 @@
             border-left: 4px solid #10b981;
         }
 
-        /* Выход */
         .logout-section {
             text-align: center;
             margin-top: 36px;
         }
 
-        /* Адаптивность */
         @media (max-width: 768px) {
             .dashboard-container {
                 padding: 0 16px;
                 margin: 24px auto;
             }
-
             .welcome-title {
                 font-size: 24px;
             }
-
             .profile-card {
                 flex-direction: column;
                 text-align: center;
                 padding: 28px 20px;
             }
-
             .user-info {
                 flex-direction: column;
             }
-
             .stats {
                 justify-content: center;
                 gap: 32px;
             }
-
             .stat-number {
                 font-size: 28px;
             }
-
+            .admin-stats-grid {
+                justify-content: center;
+                gap: 24px;
+            }
             .widgets-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
-
             .activity-item {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 8px;
             }
-
             .activity-time {
                 min-width: auto;
             }
         }
 
-        /* Анимация загрузки */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -463,12 +489,12 @@
             </div>
             <div class="stats">
                 <div class="stat-item">
-                    <div class="stat-number">{{ $commentsCount ?? 0 }}</div>
-                    <div class="stat-label">Комментарии</div>
+                    <div class="stat-number">{{ $myCommentsCount ?? 0 }}</div>
+                    <div class="stat-label">Мои комментарии</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">{{ $eventsCount ?? 0 }}</div>
-                    <div class="stat-label">События</div>
+                    <div class="stat-number">{{ $myEventsCount ?? 0 }}</div>
+                    <div class="stat-label">Мои события</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-number">{{ round($daysRegistered ?? 1) }}</div>
@@ -476,6 +502,31 @@
                 </div>
             </div>
         </div>
+
+        <!-- Статистика для администратора -->
+        @if(Auth::user()->role === 'admin')
+            <div class="admin-stats">
+                <div class="admin-stats-title">Общая статистика системы</div>
+                <div class="admin-stats-grid">
+                    <div class="admin-stat-item">
+                        <div class="admin-stat-number">{{ $totalCommentsCount ?? 0 }}</div>
+                        <div class="admin-stat-label">Всего комментариев</div>
+                    </div>
+                    <div class="admin-stat-item">
+                        <div class="admin-stat-number">{{ $totalEventsCount ?? 0 }}</div>
+                        <div class="admin-stat-label">Всего событий</div>
+                    </div>
+                    <div class="admin-stat-item">
+                        <div class="admin-stat-number">{{ $totalUsers ?? 0 }}</div>
+                        <div class="admin-stat-label">Всего пользователей</div>
+                    </div>
+                    <div class="admin-stat-item">
+                        <div class="admin-stat-number" style="color: #f59e0b;">{{ $pendingRequests ?? 0 }}</div>
+                        <div class="admin-stat-label">Запросов ожидают</div>
+                    </div>
+                </div>
+            </div>
+        @endif
 
         <div class="widgets-grid">
             <div class="widget">

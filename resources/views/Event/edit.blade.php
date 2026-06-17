@@ -222,6 +222,11 @@
                     <a href="{{ route('events.index') }}" class="btn-secondary">Назад</a>
                     <button type="submit" class="btn-primary">Сохранить изменения</button>
                 </div>
+
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" name="is_public" value="1" id="is_public" {{ old('is_public', $event->is_public ?? true) ? 'checked' : '' }}>
+                    <label for="is_public">Публичное событие</label>
+                </div>
             </form>
         </div>
     </div>

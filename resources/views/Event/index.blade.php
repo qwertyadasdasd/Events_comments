@@ -170,6 +170,16 @@
             border-top: 1px solid #f3f4f6;
         }
 
+        .type-public {
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        .type-private {
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
         @media (max-width: 768px) {
             .events-header {
                 flex-direction: column;
@@ -212,6 +222,7 @@
                 <th>Дата события</th>
                 <th>Гости</th>
                 <th>Цвет</th>
+                <th>Тип</th>
                 <th>Действия</th>
             </tr>
             </thead>
@@ -244,6 +255,13 @@
                         </div>
                     </td>
                     <td>
+                        @if($event->is_public)
+                            <span class="type-public">Публичное</span>
+                        @else
+                            <span class="type-private">Личное</span>
+                        @endif
+                    </td>
+                    <td>
                         <div class="action-buttons">
                             <a href="{{ route('events.edit', $event) }}" class="btn-edit">Редактировать</a>
                             <form action="{{ route('events.destroy', $event) }}" method="POST" style="display: inline;">
@@ -258,7 +276,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="7" class="empty-state">
+                    <td colspan="8" class="empty-state">  <!-- было 7, стало 8 -->
                         <p>Нет созданных событий</p>
                         <a href="{{ route('events.create') }}">Создать первое событие →</a>
                     </td>

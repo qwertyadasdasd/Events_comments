@@ -27,6 +27,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('events', EventController::class);
     Route::resource('comments', CommentController::class);
 
+    Route::get('/my-events', [EventController::class, 'myEvents'])->name('events.my');
+    Route::get('/my-comments', [CommentController::class, 'myComments'])->name('comments.my');
+
     Route::prefix('role-request')->name('role-request.')->group(function () {
         Route::get('/create', [RoleRequestController::class, 'create'])->name('create');
         Route::post('/', [RoleRequestController::class, 'store'])->name('store');
@@ -35,8 +38,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/role-requests', [App\Http\Controllers\AdminController::class, 'roleRequests'])->name('role-requests');
-    Route::patch('/role-requests/{id}/approve', [App\Http\Controllers\AdminController::class, 'approveRequest'])->name('role-requests.approve');
-    Route::patch('/role-requests/{id}/reject', [App\Http\Controllers\AdminController::class, 'rejectRequest'])->name('role-requests.reject');
+    Route::get('/role-requests', [AdminController::class, 'roleRequests'])->name('role-requests');
+    Route::patch('/role-requests/{id}/approve', [AdminController::class, 'approveRequest'])->name('role-requests.approve');
+    Route::patch('/role-requests/{id}/reject', [AdminController::class, 'rejectRequest'])->name('role-requests.reject');
 });
 
